@@ -1,30 +1,21 @@
 import { useState } from "react";
+import Login from "./Login";
+import Dashboard from "./Dashboard";
+import Menu from "./Menu";
 import "./App.css";
 
-function App() {
-    const [name, setName] = useState("");
-    const [message, setMessage] = useState("Welcome!");
+export default function App() {
+    const [logged, setLogged] = useState(false);
+    const [adminPage, setAdminPage] = useState(false);
 
-    const handleClick = () => {
-        setMessage(`Hello, ${name || "Guest"}!`);
-    };
+    if (!logged) return <Login onLogin={() => setLogged(true)} />;
 
     return (
-        <div className="container">
-            <h1>My React + Vite Project</h1>
+        <div>
+            <button onClick={() => setAdminPage(false)}>Menu</button>
+            <button onClick={() => setAdminPage(true)}>Admin</button>
 
-            <input
-                type="text"
-                placeholder="Enter your name..."
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
-
-            <button onClick={handleClick}>Submit</button>
-
-            <p className="msg">{message}</p>
+            {adminPage ? <Dashboard /> : <Menu />}
         </div>
     );
 }
-
-export default App;
